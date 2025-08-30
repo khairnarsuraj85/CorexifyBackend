@@ -43,7 +43,7 @@ def create_app():
     origins = [
     "http://localhost:5173",
     "http://localhost:3000",
-    "https://68b2d5d2f002a9269ebf6037--teamcorexify.netlify.app"  # Add your Netlify URL here
+    "https://68b2d817adb06d2651d8ddf9--teamcorexify.netlify.app"  # Add your Netlify URL here
     ]
 
     frontend_url = os.getenv('FRONTEND_URL')
