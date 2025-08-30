@@ -1,23 +1,36 @@
-# app/cloudinary_service.py
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from flask import current_app
 
 def upload_media(file_to_upload, folder):
     """
     Uploads a file to Cloudinary.
-    Determines resource_type (image/video) automatically.
+    Determines resource_type (image/video/raw) based on the file's content type.
     """
     try:
-        # The uploader can automatically detect the resource type
+        # --- ADDED: Logic to determine the correct resource type ---
+        content_type = file_to_upload.content_type
+        
+        if 'image' in content_type:
+            resource_type = 'image'
+        elif 'video' in content_type:
+            resource_type = 'video'
+        else:
+            # Default to 'raw' for documents like PDF, DOCX, etc.
+            resource_type = 'raw'
+
+        current_app.logger.info(f"Uploading {file_to_upload.filename} as resource_type: {resource_type}")
+
+        # The uploader now uses the explicitly determined resource type
         upload_result = cloudinary.uploader.upload(
             file_to_upload,
             folder=folder,
-            resource_type="auto"
+            resource_type=resource_type
         )
         return upload_result
     except Exception as e:
-        print(f"Cloudinary Upload Error: {e}")
+        current_app.logger.error(f"Cloudinary Upload Error: {e}")
         return None
 
 def delete_media(public_id, resource_type="image"):
@@ -31,5 +44,5 @@ def delete_media(public_id, resource_type="image"):
         )
         return result
     except Exception as e:
-        print(f"Cloudinary Deletion Error: {e}")
+        current_app.logger.error(f"Cloudinary Deletion Error: {e}")
         return None
