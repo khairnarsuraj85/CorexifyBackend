@@ -40,7 +40,12 @@ def create_app():
     
     # --- CORS (Cross-Origin Resource Sharing) Configuration ---
     # Allows your React frontend to make requests to this Flask backend.
-    origins = ["http://localhost:5173", "http://localhost:3000"]
+    origins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://68b2d324a46e3d019aec4b4e--teamcorexify.netlify.app"  # Add your Netlify URL here
+    ]
+
     frontend_url = os.getenv('FRONTEND_URL')
     if frontend_url:
         origins.append(frontend_url)
