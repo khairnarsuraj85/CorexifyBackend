@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+instance/
+serviceAccountKey.json
+setup_super_admin.py
+*.env
+*.log
