@@ -1,3 +1,3 @@
 from app import create_app
 
-app = create_app()  # now Gunicorn can see 'app'
+app = create_app()  # Gunicorn needs a variable called 'app'
